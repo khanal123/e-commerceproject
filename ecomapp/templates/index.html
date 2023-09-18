@@ -1,0 +1,541 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+
+<!-- banner/slider/carousel-->
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	<!-- Indicators-->
+	<!-- Yaa separately duita loop launa parne hunxa in this case hai cuz rank(tyo muni ko dallo dallo hunxa ni) ani slider ko part xutta xuttai xa  -->
+
+	<ol class="carousel-indicators">
+		<!-- repeat bhako item jun xa tyo sab hatara euta matra baki rakhane ani   jaile ni tesko mathi patti laune ho for loop chi  -->
+
+		<!-- Hamro yo talako case ma li haru dherai repeat bhako thyo so baki li lai hatara euta matra rakhem ani tesma for loop layem  -->
+
+		{% for slide in slider %}
+		<li data-target="#myCarousel" data-slide-to="{{slide.rank}}" class="{{slide.status}}"></li>
+		{% endfor %}
+	</ol>
+
+	<div class="carousel-inner" role="listbox">
+
+		<!-- Jaa jaa active dekhinxa sab thau ma slide.status rakhne cuz hamile status lai represent garne model banako theu ni  -->
+
+		<!-- aba yaa arko cuttai for loop launa parne hunxa cuz yo chi slider ko image ko part bhayo ; mathiko ta slider ko rank ko lagi thyo  -->
+
+		<!-- sabai template ma yestai condition hunxa bhanne xaina; eutai for loop le kaam chalne ni huna sakxa ; template anusar pharak ho  -->
+
+		{% for slide in slider %}
+
+		{% if slide.rank == 0 %}
+		<!-- jun lai active garna parne(suruma dekhaune) ho teslai 0 set gardine yaa cuz database ma ni first slider lai 0 nai rank dya xu ni ta maile -->
+
+		<!-- edi slider ko rank 0 xa bhane yo if block execute hunxa ; 0 bhanera hamile uta admin dashboard ma set garya xau ; ani if 0 xaina bhane talako else part chalxa jasle garda baki slider (jo default xan) haru herna pauxau -->
+
+		<!-- rank 0 huneko status active banaide bhaneko  -->
+
+		<div class="item {{slide.status}}">
+			<div class="container">
+				<div class="carousel-caption">
+					<h3> <span>{{slide.upper_part}}</span> </h3>
+					<p> <span> {{slide.lower_part}} </span> </p>
+					<a class="button2" href="product.html">Shop Now </a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Dherai template ma chi slider ko lagi image css mai include garya hunxa ; if so then tya bata copy garera laune ani image ko lagi chine css code yaa paste  gardaine  -->
+		<!-- Uta bata cut nai gardine CSS ko part  -->
+
+		<style>
+			.carousel .item {
+				background:-webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)),
+				url({{slide.image}}) no-repeat;
+				background:-moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)),
+				url({{slide.image}}) no-repeat;
+			}
+		</style>
+
+		{% else %}
+
+		<!-- aba yo else part ma ayesi ta aru default rank(0 bahek aru sab) bhaka slider haru lai display garnu parne ho ; tei bhara slide.rank ko basis ma aba aru lai display garaide bhaenko  -->
+
+		<div class="item item{{slide.rank}}">
+			<!-- yaa item item{{slide.rank}} kina garya ;   item {{slide.rank}} matra garda hunthyo bhanne question man maa auna sakxa....uta hamro css nai tesari banya xa k ; first active image ko lagi item class ek choti matra use bha xa tara aru sabai ko lagi pheri arko xuttai item class rank ko basis ma use bha xa ; tei bhara esto gareko ; css ma gayera herda hunxa ; yo else part ma aune image haru bhanya ta first ko active bahek aru image haru hun ni  -->
+
+			<div class="container">
+				<div class="carousel-caption">
+					<h3> <span>{{slide.upper_part}}</span> </h3>
+					<p> <span> {{slide.lower_part}} </span> </p>
+					<a class="button2" href="product.html">Shop Now </a>
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.carousel .item.item {
+					{
+					slide.rank
+				}
+			}
+
+				{
+				background:-webkit-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)),
+				url({{slide.image}}) no-repeat;
+				background:-moz-linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)),
+				url({{slide.image}}) no-repeat;
+			}
+		</style>
+
+		{% endif %}
+		{% endfor %}
+	</div>
+
+	<!-- Yo part lai chi edit garna pardaina ; yesko khasai role xaina -->
+	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div>
+<!-- banner/slider/carousel end -->
+
+
+<!-- top Products -->
+<div class="ads-grid">
+	<div class="container">
+		<!-- tittle heading -->
+		<h3 class="tittle-w3l">Our Top Products
+			<span class="heading-style">
+				<i></i>
+				<i></i>
+				<i></i>
+			</span>
+		</h3>
+		<!-- //tittle heading -->
+		<!-- product left -->
+		<div class="side-bar col-md-3">
+			<div class="search-hotel">
+				<h3 class="agileits-sear-head">Search Here..</h3>
+				<form action="#" method="post">
+					<input type="search" placeholder="Product name..." name="search" required="">
+					<input type="submit" value=" ">
+				</form>
+			</div>
+			<!-- price range -->
+			<div class="range">
+				<h3 class="agileits-sear-head">Price range</h3>
+				<ul class="dropdown-menu6">
+					<li>
+
+						<div id="slider-range"></div>
+						<input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
+					</li>
+				</ul>
+			</div>
+			<!-- //price range -->
+			<!-- food preference -->
+			<div class="left-side">
+				<h3 class="agileits-sear-head">Food Preference</h3>
+				<ul>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Vegetarian</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Non-Vegetarian</span>
+					</li>
+				</ul>
+			</div>
+			<!-- //food preference -->
+			<!-- discounts -->
+			<div class="left-side">
+				<h3 class="agileits-sear-head">Discount</h3>
+				<ul>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">5% or More</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">10% or More</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">20% or More</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">30% or More</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">50% or More</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">60% or More</span>
+					</li>
+				</ul>
+			</div>
+			<!-- //discounts -->
+			<!-- reviews -->
+			<div class="customer-rev left-side">
+				<h3 class="agileits-sear-head">Customer Review</h3>
+				<ul>
+					<li>
+						<a href="#">
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<span>5.0</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<span>4.0</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star-half-o" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<span>3.5</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<span>3.0</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star" aria-hidden="true"></i>
+							<i class="fa fa-star-half-o" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<i class="fa fa-star-o" aria-hidden="true"></i>
+							<span>2.5</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- //reviews -->
+			<!-- cuisine -->
+			<div class="left-side">
+				<h3 class="agileits-sear-head">Cuisine</h3>
+				<ul>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">South American</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">French</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Greek</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Chinese</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Japanese</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Italian</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Mexican</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Thai</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span">Indian</span>
+					</li>
+					<li>
+						<input type="checkbox" class="checked">
+						<span class="span"> Spanish </span>
+					</li>
+				</ul>
+			</div>
+			<!-- //cuisine -->
+			<!-- deals -->
+			<div class="deal-leftmk left-side">
+				<h3 class="agileits-sear-head">Special Deals</h3>
+				<div class="special-sec1">
+					<div class="col-xs-4 img-deals">
+						<img src="{% static 'images/d2.jpg'%}" alt="">
+					</div>
+					<div class="col-xs-8 img-deal1">
+						<h3>Lay's Potato Chips</h3>
+						<a href="single.html">$18.00</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="special-sec1">
+					<div class="col-xs-4 img-deals">
+						<img src="{% static 'images/d1.jpg'%}" alt="">
+					</div>
+					<div class="col-xs-8 img-deal1">
+						<h3>Bingo Mad Angles</h3>
+						<a href="single.html">$9.00</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="special-sec1">
+					<div class="col-xs-4 img-deals">
+						<img src="{% static 'images/d4.jpg'%}" alt="">
+					</div>
+					<div class="col-xs-8 img-deal1">
+						<h3>Tata Salt</h3>
+						<a href="single.html">$15.00</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="special-sec1">
+					<div class="col-xs-4 img-deals">
+						<img src="{% static 'images/d5.jpg'%}" alt="">
+					</div>
+					<div class="col-xs-8 img-deal1">
+						<h3>Gujarat Dry Fruit</h3>
+						<a href="single.html">$525.00</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="special-sec1">
+					<div class="col-xs-4 img-deals">
+						<img src="{% static 'images/d3.jpg'%}" alt="">
+					</div>
+					<div class="col-xs-8 img-deal1">
+						<h3>Cadbury Dairy Milk</h3>
+						<a href="single.html">$149.00</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!-- //deals -->
+		</div>
+		<!-- //product left -->
+
+		<!-- product right -->
+		<div class="agileinfo-ads-display col-md-9">
+			<div class="wrapper">
+
+				{% for cat in categories %}
+				<!-- first section (nuts) -->
+				<div class="product-sec1">
+					<h3 class="heading-tittle"> {{cat.title}} </h3>
+					<!-- aba item ko lagi xuttai for loop launa paro cuz paxi filtering garna parne huxna so we need separate for loop  -->
+
+					<!-- So hamile yaa nested for loop banako xau  -->
+					{% for item in items %}
+
+					<!-- Euta ta main category bhaihalo xuttai and item pani category anusar nai database ma baseko hunxa ; so duitai ma category hune bhayekole hami yaa matching garxau by using if condition  -->
+
+					{% if item.category_id == cat.id %}
+					<!-- # cat.id bhanya main category ko id ; ani category_id bhanya tyo models ma hamile items bhitra banako category field thyo ni ho tesko id 
+					# aba yo duita match bhayo bhane matra hami further kaam haru garna sakxau; filtering garna ko lagi pani duitai category id match huna parxa  -->
+					<!-- # hamile category lai foreign key lagako theu so aba defualt rup ma primary key bhaneko category id nai hunxa  -->
+
+					<div class="col-md-4 product-men">
+						<div class="men-pro-item simpleCart_shelfItem">
+							<div class="men-thumb-item">
+
+								<!-- Paxadi .url include garna parxa if we have uploaded our image through ImageField() locally  -->
+								<img src="{{item.image.url}}" height='160' width='160' alt="Error loading image">
+								<div class="men-cart-pro">
+									<div class="inner-men-cart-pro">
+										<!-- # Yaa aba tyo models ma banako function call garne  -->
+										<a href="{{item.get_item_url}}" class="link-product-add-cart">Quick View </a>
+									</div>
+								</div>
+								<span class="product-new-top">{{item.labels}}</span>
+							</div>
+							<div class="item-info-product ">
+								<h4>
+									<!-- Mathi chi hamile quick view bhanne option ma click garera view gareu but If we want ki item ko name ma click garera ni quick view garna paiyos then we can also call function inside this link  -->
+									<a href="{{item.get_item_url}}">{{item.title}}</a>
+								</h4>
+
+
+								<!-- discounted_price > 0 means discount dya xa so in such case yo code run gara ; if dno discount then talako else condition run gara  -->
+
+								{% if item.discounted_price > 0 %}
+								<div class="info-product-price">
+									<span class="item_price"> Rs.{{item.discounted_price}}</span>
+
+									<!-- yo talako chi actual price ho  -->
+									<!-- del tag le price delete garxa  -->
+									<del> Rs.{{item.price}}</del>
+								</div>
+
+								{% else %}
+
+								<div class="info-product-price">
+									<!-- Aba yo case ma discounted price nai xaina bhanesi main price yo ho  -->
+									<span class="item_price"> Rs.{{item.price}}</span>
+
+								</div>
+
+								{% endif %}
+
+								<div
+									class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+									<!-- action bhannale tesko backend code tya xa hai bhanne bujauxa  -->
+									<form action="{% url 'ecomapp:add_to_cart' %}" method='POST'>
+
+										{% csrf_token %}
+										<fieldset>
+											<!-- hidden gareko bela jaile ni value rakhna parxa; hidden bhaneko form bata  data backend ma chi giraxa but we wont't see that  -->
+											<input type="hidden" name="slug" value="{{item.slug}}">
+
+											<input type="hidden" name="title" value="{{item.title}}">
+
+											<input type="hidden" name="image" value="{{item.image.url}}">
+
+
+											<input type="hidden" name="description" value="{{item.description}}">
+
+											<input type="hidden" name="quantity" value="{{item.quantity}}">
+
+											{% if item.discounted_price > 0 %}
+
+											<input type="hidden" name="price" value="{{item.discounted_price}}">
+											{% else %}
+
+											<input type="hidden" name="price" value="{{item.price}}">
+
+											{% endif %}
+
+											<input type="submit" name="submit" value="Add to cart" class="button" />
+										</fieldset>
+
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					{% endfor %}
+					<div class="clearfix"></div>
+				</div>
+				<!-- //first section (nuts) -->
+
+				<!-- second section (nuts special) for product slider -->
+				{% for ad in ads %}
+				{% if ad.category_id == cat.id %}
+				<!-- # aba main category ko id ra add bhanne database ma tyo ad.category_id match bhayesi matra tyo template ma add display hunxa ; if condition layenam bhane bhaye bhar ko banner ekai choti display hunxa; tara hamilai ta category anusar ko banner view garauna xa; jasko lagi hamile Ad bhanne model ma category lai tanera tesma ni foreign key laako xam; same item ma jastai k kei pharak xaina  -->
+				<div class="product-sec1 product-sec2">
+					<div class="col-xs-7 effect-bg">
+						<h3 class="">{{ad.upper_part}}</h3>
+						<h6>{{ad.middle_part}}</h6>
+						<p>{{ ad.lower_part }}</p>
+					</div>
+					<div class="col-xs-5 bg-right-nut">
+						<img src="{{ad.image}}" height="240" width="300" alt="Error loading image">
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				{% endif %}
+				{% endfor %}
+
+				<!-- //second section (nuts special) -->
+
+				{% endfor %}
+			</div>
+		</div>
+		<!-- //product right -->
+	</div>
+</div>
+<!-- //top products -->
+
+<!-- special offers -->
+<div class="featured-section" id="projects">
+	<div class="container">
+		<!-- tittle heading -->
+		<h3 class="tittle-w3l">Special Offers
+			<span class="heading-style">
+				<i></i>
+				<i></i>
+				<i></i>
+			</span>
+		</h3>
+		<!-- //tittle heading -->
+		<div class="content-bottom-in">
+			<ul id="flexiselDemo1">
+
+				{% for spe in special_offers %}
+
+				<li>
+					<div class="w3l-specilamk">
+						<div class="speioffer-agile">
+							<a href="single.html">
+								<img src="{{spe.image}}" height="180" width="180" alt="">
+							</a>
+						</div>
+						<div class="product-name-w3l">
+							<h4>
+								<a href="single.html">{{spe.title}}</a>
+							</h4>
+							<div class="w3l-pricehkj">
+								<h6> Rs.{{spe.price}}</h6>
+								<!-- Aba tyo models.py ko function lai call garnu paryo jasle actual price - discounted price garera save price dinxa  -->
+								<p> Save Rs.{{spe.specials_offers}} </p>
+							</div>
+							<div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+								<form action="#" method="post">
+									<fieldset>
+										<input type="hidden" name="cmd" value="_cart" />
+										<input type="hidden" name="add" value="1" />
+										<input type="hidden" name="business" value=" " />
+										<input type="hidden" name="item_name" value="Aashirvaad, 5g" />
+										<input type="hidden" name="amount" value="220.00" />
+										<input type="hidden" name="discount_amount" value="1.00" />
+										<input type="hidden" name="currency_code" value="USD" />
+										<input type="hidden" name="return" value=" " />
+										<input type="hidden" name="cancel_return" value=" " />
+										<input type="submit" name="submit" value="Add to cart" class="button" />
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- //special offers -->
+{% endblock %}
